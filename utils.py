@@ -1,5 +1,15 @@
 import torch
 from torchvision import datasets, transforms
+from PIL import Image
+
+
+def save_image_from_tensor(tensor, file_path):
+    ### Save a single image from torch tensor
+    ### refer to https://pytorch.org/vision/stable/_modules/torchvision/utils.html#save_image
+    tensor = (tensor + 1) / 2   # for HiDDeN watermarking method only
+    tensor = tensor.mul(255).add_(0.5).clamp_(0, 255).permute(1,2,0).to("cpu", torch.uint8).numpy()
+    im = Image.fromarray(tensor)
+    im.save(file_path)
 
 
 def get_data_loaders(image_size, dataset_folder):
