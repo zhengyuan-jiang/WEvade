@@ -45,13 +45,13 @@ def main():
     exp = args.exp
     setup_seed(args.seed)   
 
-    # Load model
+    ### Load model
     model = Model(args.image_size, args.watermark_length, device)
     checkpoint = torch.load(args.checkpoint)
     model.encoder.load_state_dict(checkpoint['enc-model'])
     model.decoder.load_state_dict(checkpoint['dec-model'])
 
-    # Load dataset
+    ### Load dataset
     val_data = utils.get_data_loaders(args.image_size, args.dataset_folder)
 
     ### Load watermark

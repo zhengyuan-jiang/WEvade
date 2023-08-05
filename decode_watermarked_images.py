@@ -45,7 +45,7 @@ def main():
 
 
 
-    # Load model.
+    ### Load model.
     model = Model(args.image_size, args.watermark_length, device)
     checkpoint = torch.load(args.checkpoint)
     model.encoder.load_state_dict(checkpoint['enc-model'])
