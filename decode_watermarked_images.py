@@ -41,7 +41,7 @@ def main():
     parser.add_argument('--seed', '-s', default=10, type=int)
     args = parser.parse_args()
     exp = args.exp
-    setup_seed(args.seed)
+    setup_seed(args.seed)   
 
 
 
@@ -56,13 +56,13 @@ def main():
     if not os.path.exists(watermarked_dataset_dir):
         assert "Watermarked dataset does not exists."
 
-    load_array = False # either load watermarked images or watermarked image array
+    load_array = False # load watermarked images in either RGB images or the number array
     if load_array:
         watermarked_images = np.load('{}/watermarked_image_array.npy'.format(watermarked_dataset_dir))
         watermarked_images = torch.from_numpy(watermarked_images)
     else:
         watermarked_img_dir = os.path.join(watermarked_dataset_dir, 'watermarked') # load watermarked images: 1.0 bit-accuracy
-        # watermarked_img_dir = os.path.join(watermarked_dataset_dir, 'clean')    # load clean images for evaluation purpose: 0.5 bit-accuracy
+        # watermarked_img_dir = os.path.join(watermarked_dataset_dir, 'clean')     # load clean images for evaluation purpose: 0.5 bit-accuracy
         num_images = len(os.listdir(watermarked_img_dir))
         watermarked_images = torch.zeros((num_images, 3, args.image_size, args.image_size))
 

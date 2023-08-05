@@ -43,15 +43,15 @@ def main():
     parser.add_argument('--num-images', '-n', default=10, type=int, help='batch size')
     args = parser.parse_args()
     exp = args.exp
-    setup_seed(args.seed)
+    setup_seed(args.seed)   
 
-    # Load model.
+    # Load model
     model = Model(args.image_size, args.watermark_length, device)
     checkpoint = torch.load(args.checkpoint)
     model.encoder.load_state_dict(checkpoint['enc-model'])
     model.decoder.load_state_dict(checkpoint['dec-model'])
 
-    # Load dataset.
+    # Load dataset
     val_data = utils.get_data_loaders(args.image_size, args.dataset_folder)
 
     ### Load watermark
@@ -81,7 +81,7 @@ def main():
     if not os.path.exists(original_img_dir):
         os.makedirs(original_img_dir)
 
-    ### Save both watermarked images (i.e., integer numbers from [0,255]) or watermarked image array (i.e., arbitrary float numbers)
+    ### Save watermarked images in both RGB images (i.e., integer numbers in [0,255]) and the numpy array (i.e., arbitrary float numbers)   
     num_images = min(len(val_data.dataset), args.num_images)
     image_array = np.zeros((num_images, 3, args.image_size, args.image_size)).astype(np.float32)
 
@@ -97,11 +97,11 @@ def main():
         encoded_image_batch = model.encoder(image_batch, msg_batch)
         encoded_image_batch = encoded_image_batch.detach().cpu()
         
-        # use watermarked image array (i.e., arbitrary float numbers)
+        # use the numpy array (i.e., arbitrary float numbers)
         image_array[image_idx:image_idx+1] = np.array(encoded_image_batch)
 
         # option 1:
-        # save clean and watermarked images (i.e., integer numbers from [0,255])
+        # save clean and watermarked images in RGB images (i.e., integer numbers in [0,255])
         # clean images
         filename = os.path.join(original_img_dir, '{}.png'.format(image_idx))
         utils.save_image_from_tensor(image_batch[0], filename)
@@ -114,7 +114,7 @@ def main():
             break
 
     # option 2: 
-    # save watermarked image array (i.e., arbitrary float numbers)
+    # save watermarked images in the numpy array (i.e., arbitrary float numbers)
     filename = os.path.join(result_dir, 'watermarked_image_array.npy')
     np.save(filename, image_array)
     print("Save watermarked images and watermarked image array at {}".format(result_dir))
