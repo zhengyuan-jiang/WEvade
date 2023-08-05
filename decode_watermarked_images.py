@@ -31,14 +31,14 @@ def main():
     else:
         device = torch.device('cpu')
 
-    parser = argparse.ArgumentParser(description='Encode watermarked images')
+    parser = argparse.ArgumentParser(description='Decode watermarked images')
     parser.add_argument('--checkpoint', default='./ckpt/coco.pth', type=str, help='Model checkpoint file.')
     parser.add_argument('--dataset-folder', default='./dataset/coco/val', type=str, help='Dataset folder path.')
     parser.add_argument('--image-size', default=128, type=int, help='Size of the images (height and width).')
     parser.add_argument('--watermark-length', default=30, type=int, help='Number of bits in a watermark.')
 
-    parser.add_argument('--exp', '-e', default="COCO", type=str, help='where to load watermarked images')
-    parser.add_argument('--seed', '-s', default=10, type=int)
+    parser.add_argument('--exp', default="COCO", type=str, help='where to load watermarked images')
+    parser.add_argument('--seed', default=10, type=int)
     args = parser.parse_args()
     exp = args.exp
     setup_seed(args.seed)   
@@ -58,11 +58,11 @@ def main():
 
     load_array = False # load watermarked images in either RGB images or the number array
     if load_array:
-        watermarked_images = np.load('{}/watermarked_image_array.npy'.format(watermarked_dataset_dir))
+        watermarked_images = np.load('{}/image_array.npy'.format(watermarked_dataset_dir))
         watermarked_images = torch.from_numpy(watermarked_images)
     else:
-        watermarked_img_dir = os.path.join(watermarked_dataset_dir, 'watermarked') # load watermarked images: 1.0 bit-accuracy
-        # watermarked_img_dir = os.path.join(watermarked_dataset_dir, 'clean')     # load clean images for evaluation purpose: 0.5 bit-accuracy
+        watermarked_img_dir = os.path.join(watermarked_dataset_dir, 'watermarked') # load watermarked images: around 1.0 bit-accuracy
+        # watermarked_img_dir = os.path.join(watermarked_dataset_dir, 'clean')     # load clean images for evaluation purpose: around 0.5 bit-accuracy
         num_images = len(os.listdir(watermarked_img_dir))
         watermarked_images = torch.zeros((num_images, 3, args.image_size, args.image_size))
 

@@ -216,7 +216,7 @@ def draw_curve(results_dict, file_path, norm='inf'):
         matplotlib.rcParams['figure.figsize'] = 8,6
     params_init()
     fig, ax = plt.subplots()
-    plt.subplots_adjust(left=0.15,right=0.95,top=0.95, bottom=0.15)
+    plt.subplots_adjust(left=0.12,right=0.95,top=0.95, bottom=0.15)
 
     tau_ls = []
     pert_ls = []
@@ -256,8 +256,8 @@ def main():
     parser.add_argument('--image-size', default=128, type=int, help='Size of the images (height and width).')
     parser.add_argument('--watermark-length', default=30, type=int, help='Number of bits in a watermark.')
     parser.add_argument('--detector-type', default='double-tailed', choices=['double-tailed','single-tailed'], type=str, help='Using double-tailed/single-tailed detctor.')
-    parser.add_argument('--exp', '-e', default="COCO", type=str, help='Subfolder where to load the watermarked dataset and save attack results')
-    parser.add_argument('--seed', '-s', default=10, type=int)
+    parser.add_argument('--exp', default="COCO", type=str, help='Subfolder where to load the watermarked dataset and save attack results')
+    parser.add_argument('--seed', default=10, type=int)
 
     # Attack settings
     parser.add_argument('--num_attack', default=5, type=int, help='number of images to attack')
@@ -268,9 +268,9 @@ def main():
     parser.add_argument('--ES', default=20, type=int, help='early stopping criterion')
     parser.add_argument('--norm', default='inf', choices=['2','inf'], help='norm metric') # We optimize different norm for Hopskipjump when using different norm as the metric following their original work
     parser.add_argument('--batch-size', default=256, type=int, help='batch size for hopskipjump')
-    parser.add_argument('--verbose', default=True, type=bool)
-    parser.add_argument('--save_image', default=True, type=bool)
-    parser.add_argument('--draw_curve', default=True, type=bool)
+    parser.add_argument('--verbose', default=True, type=bool, help='verbose mode')
+    parser.add_argument('--save_image', default=True, type=bool, help='save adversarial images')
+    parser.add_argument('--draw_curve', default=True, type=bool, help='draw result curves')
     args = parser.parse_args()   
     exp = args.exp
     if args.norm=='2':
@@ -279,7 +279,7 @@ def main():
 
 
 
-    ### Load model.
+    ### Load model
     model = Model(args.image_size, args.watermark_length, device)
     checkpoint = torch.load(args.checkpoint)
     model.encoder.load_state_dict(checkpoint['enc-model'])
@@ -294,9 +294,9 @@ def main():
     # We experiment with RGB images by default because in practice, watermarked images are represented as RGB values rather than the numpy array   
     load_array = False
     if load_array:
-        watermarked_images = np.load('{}/watermarked_image_array.npy'.format(watermarked_dataset_dir)).astype(np.float32)
+        watermarked_images = np.load('{}/image_array.npy'.format(watermarked_dataset_dir)).astype(np.float32)
     else:
-        watermarked_img_dir = os.path.join(watermarked_dataset_dir, 'watermarked') # load watermarked images: 1.0 bit-accuracy
+        watermarked_img_dir = os.path.join(watermarked_dataset_dir, 'watermarked')
         num_images = len(os.listdir(watermarked_img_dir))
         watermarked_images = np.zeros((num_images, 3, args.image_size, args.image_size)).astype(np.float32)
 
@@ -330,8 +330,8 @@ def main():
     print("Use l_{} norm as the metric.\n".format(norm))
 
     quality_ls = [99,90,70,50,30,10,5,3,2,1]
-    th_ls = [0.55]
-    # th_ls = [0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95]   
+    # th_ls = [0.55, 0.6]
+    th_ls = [0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95]   
     verbose = args.verbose
     results_dict = {}
     results_dir = "./results/{}/".format(exp)

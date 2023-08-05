@@ -38,9 +38,9 @@ def main():
     parser.add_argument('--image-size', default=128, type=int, help='Size of the images (height and width).')
     parser.add_argument('--watermark-length', default=30, type=int, help='Number of bits in a watermark.')
 
-    parser.add_argument('--exp', '-e', default="COCO", type=str, help='where to save watermarked images')
-    parser.add_argument('--seed', '-s', default=10, type=int)
-    parser.add_argument('--num-images', '-n', default=10, type=int, help='batch size')
+    parser.add_argument('--exp', default="COCO", type=str, help='where to save watermarked images')
+    parser.add_argument('--seed', default=10, type=int)
+    parser.add_argument('--num-images', default=10, type=int, help='number of images to embed watermark')
     args = parser.parse_args()
     exp = args.exp
     setup_seed(args.seed)   
@@ -98,7 +98,7 @@ def main():
         encoded_image_batch = encoded_image_batch.detach().cpu()
         
         # use the numpy array (i.e., arbitrary float numbers)
-        image_array[image_idx:image_idx+1] = np.array(encoded_image_batch)
+        image_array[image_idx:image_idx+1] = np.array(encoded_image_batch).copy()   
 
         # option 1:
         # save clean and watermarked images in RGB images (i.e., integer numbers in [0,255])
@@ -115,9 +115,9 @@ def main():
 
     # option 2: 
     # save watermarked images in the numpy array (i.e., arbitrary float numbers)
-    filename = os.path.join(result_dir, 'watermarked_image_array.npy')
+    filename = os.path.join(result_dir, 'image_array.npy')
     np.save(filename, image_array)
-    print("Save watermarked images and watermarked image array at {}".format(result_dir))
+    print("Save watermarked images in RGB images and the numpy array at {}".format(result_dir))
 
 if __name__ == '__main__':
     main()
