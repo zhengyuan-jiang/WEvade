@@ -260,7 +260,7 @@ def main():
     parser.add_argument('--seed', default=10, type=int)
 
     # Attack settings
-    parser.add_argument('--num_attack', default=5, type=int, help='number of images to attack')
+    parser.add_argument('--num-attack', default=100, type=int, help='number of images to attack')
     parser.add_argument('--budget', default=2000, type=int, help='query budget')
     parser.add_argument('--init-eval', default=5, type=int, help='hopskipjump parameters')
     parser.add_argument('--max-eval', default=1000, type=int, help='hopskipjump parameters')
@@ -269,8 +269,8 @@ def main():
     parser.add_argument('--norm', default='inf', choices=['2','inf'], help='norm metric') # We optimize different norm for Hopskipjump when using different norm as the metric following their original work
     parser.add_argument('--batch-size', default=256, type=int, help='batch size for hopskipjump')
     parser.add_argument('--verbose', default=True, type=bool, help='verbose mode')
-    parser.add_argument('--save_image', default=True, type=bool, help='save adversarial images')
-    parser.add_argument('--draw_curve', default=True, type=bool, help='draw result curves')
+    parser.add_argument('--save-image', default=True, type=bool, help='save adversarial images')
+    parser.add_argument('--draw-curve', default=True, type=bool, help='draw result curves')
     args = parser.parse_args()   
     exp = args.exp
     if args.norm=='2':
@@ -434,6 +434,7 @@ def main():
 
 
         results_dict[th] = [avg_error/len(best_adv_images), ER]
+        # break
 
     print("Finish Attack.")
 

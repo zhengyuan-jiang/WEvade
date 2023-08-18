@@ -39,8 +39,8 @@ def main():
     parser.add_argument('--watermark-length', default=30, type=int, help='Number of bits in a watermark.')
 
     parser.add_argument('--exp', default="COCO", type=str, help='where to save watermarked images')
-    parser.add_argument('--seed', default=10, type=int)
-    parser.add_argument('--num-images', default=10, type=int, help='number of images to embed watermark')
+    parser.add_argument('--seed', default=2023, type=int)
+    parser.add_argument('--num-images', default=100, type=int, help='number of images to embed watermark')
     args = parser.parse_args()
     exp = args.exp
     setup_seed(args.seed)   
