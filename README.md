@@ -16,13 +16,48 @@ This code is the official implementation of our paper: Evading Watermark based D
 
       pip install adversarial-robustness-toolbox
 
-## Run Wevade-B-Q (query based black-box attack)
+## Run WEvade-W (white-box attack)
+
+Run WEvade-W-II:
+
+```
+## Standard training
+python3 main.py --checkpoint './ckpt/coco.pth' --dataset-folder './dataset/coco/val'
+
+## Adversarial training
+python3 main.py --checkpoint './ckpt/coco_adv_train.pth' --dataset-folder './dataset/coco/val'
+```
+
+Run other variants:
+
+```
+## WEvade-W-I
+python3 main.py --checkpoint './ckpt/coco.pth' --dataset-folder './dataset/coco/val' --WEvade-type 'WEvade-W-I'
+
+## Single-tailed detector
+python3 main.py --checkpoint './ckpt/coco.pth' --dataset-folder './dataset/coco/val' --detector-type 'single-tailed'
+
+## Binary search
+python3 main.py --checkpoint './ckpt/coco.pth' --dataset-folder './dataset/coco/val' --binary-search True
+```
+
+Run existing post-processing methods:
+
+```
+## Standard training
+python3 existing_post_processing.py --checkpoint './ckpt/coco.pth' --dataset-folder './dataset/coco/val'
+
+## Adversarial training
+python3 existing_post_processing.py --checkpoint './ckpt/coco_adv_train.pth' --dataset-folder './dataset/coco/val'
+```
+
+## Run WEvade-B-Q (query based black-box attack)
 
 1. Encode watermark and save watermarked images (watermark is generated using the random seed):
 
 		## Standard training
 		python3 encode_watermarked_images.py --checkpoint './ckpt/coco.pth' --dataset-folder './dataset/coco/val' --exp 'COCO'
-
+	
 		## Adversarial training
 		python3 encode_watermarked_images.py --checkpoint './ckpt/coco_adv_train.pth' --dataset-folder './dataset/coco/val' --exp 'COCO-ADV'
 
@@ -30,15 +65,15 @@ This code is the official implementation of our paper: Evading Watermark based D
 
 		## Standard training
 		python3 decode_watermarked_images.py --checkpoint './ckpt/coco.pth' --dataset-folder './dataset/coco/val' --exp 'COCO'
-
+	
 		## Adversarial training
 		python3 decode_watermarked_images.py --checkpoint './ckpt/coco_adv_train.pth' --dataset-folder './dataset/coco/val' --exp 'COCO-ADV'
 
-3. Run our black-box attack:
+3. Run WEvade-B-Q:
 
 		## Standard training
 		python3 main_WEvade_B_Q.py --checkpoint './ckpt/coco.pth' --dataset-folder './dataset/coco/val' --exp 'COCO' --num-attack 10 --norm 'inf'
-
+		
 		## Adversarial training
 		python3 main_WEvade_B_Q.py --checkpoint './ckpt/coco_adv_train.pth' --dataset-folder './dataset/coco/val' --exp 'COCO-ADV' --num-attack 10 --norm 'inf'
 

@@ -1,9 +1,7 @@
 import torch.nn as nn
 
 class ConvBNRelu(nn.Module):
-    """
-    Building block used in HiDDeN network. Is a sequence of Convolution, Batch Normalization, and ReLU activation
-    """
+    # A block of Convolution, Batch Normalization, and ReLU activation
     def __init__(self, channels_in, channels_out, stride=1):
 
         super(ConvBNRelu, self).__init__()

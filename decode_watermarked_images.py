@@ -74,8 +74,8 @@ def main():
             watermarked_images[i] = im
     
     ### Load watermark
-    msg_dir = './watermark/{}'.format(exp)
-    msg_path = os.path.join(msg_dir, 'message.npy')
+    msg_dir = './watermark/'
+    msg_path = os.path.join(msg_dir, 'watermark_coco.npy')
     if not os.path.exists(msg_path):
         assert "Watermark does not exists."
     msg = np.load(msg_path)

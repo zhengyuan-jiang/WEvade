@@ -1,3 +1,4 @@
+# From https://github.com/ChaoningZhang/Pseudo-Differentiable-JPEG/blob/master/noise_layers/diff_jpeg.py
 import torch
 import torch.nn as nn
 # Local

@@ -17,7 +17,7 @@ def main():
         device = torch.device('cpu')
 
     parser = argparse.ArgumentParser(description='WEvade-W Arguments.')
-    parser.add_argument('--checkpoint', default='./coco_adv_train.pth', type=str, help='Model checkpoint file.')
+    parser.add_argument('--checkpoint', default='./ckpt/coco.pth', type=str, help='Model checkpoint file.')
     parser.add_argument('--dataset-folder', default='./dataset/coco/val', type=str, help='Dataset folder path.')
     parser.add_argument('--image-size', default=128, type=int, help='Size of the images (height and width).')
     parser.add_argument('--watermark-length', default=30, type=int, help='Number of bits in a watermark.')
@@ -28,7 +28,9 @@ def main():
     parser.add_argument('--rb', default=2, type=float, help='Upper bound of perturbation.')
     parser.add_argument('--WEvade-type', default='WEvade-W-II', type=str, help='Using WEvade-W-I/II.')
     parser.add_argument('--detector-type', default='double-tailed', type=str, help='Using double-tailed/single-tailed detctor.')
-    # In our algorithm, we use binary-search to obtain perturbation upper bound. But in the experiment, we find binary-search actually has no significant effect on the perturbation results. And we reduce time cost if not using binary-search.
+    # In our algorithm, we use binary-search to obtain perturbation upper bound. But in the experiment, we find
+    # binary-search actually has no significant effect on the perturbation results. And we reduce time cost if not
+    # using binary-search.
     parser.add_argument('--binary-search', default=False, type=bool, help='Whether use binary-search to find perturbation.')
 
     args = parser.parse_args()
@@ -68,9 +70,10 @@ def main():
         # Detection for double-tailed/single-tailed detector.
         if args.detector_type == 'double-tailed':
             evasion = (1-args.tau <= bit_acc and bit_acc <= args.tau)
-        elif args.detector_type == 'double-tailed':
+        elif args.detector_type == 'single-tailed':
             evasion = (bit_acc <= args.tau)
 
+        bound = bound / 2   # [-1,1]->[0,1]
         Bit_acc.update(bit_acc, image.shape[0])
         Perturbation.update(bound, image.shape[0])
         Evasion_rate.update(evasion, image.shape[0])

@@ -8,7 +8,7 @@ def WEvade_W(original_image, Encoder, Decoder, criterion, args):
 
     # Embed the ground-truth watermark into the original image.
     original_image = original_image.cuda()
-    groundtruth_watermark = torch.from_numpy(np.load('./watermark_coco.npy')).cuda()
+    groundtruth_watermark = torch.from_numpy(np.load('./watermark/watermark_coco.npy')).cuda()
     watermarked_image = Encoder(original_image, groundtruth_watermark)
     watermarked_image = transform_image(watermarked_image)
     watermarked_image_cloned = watermarked_image.clone()
@@ -69,7 +69,7 @@ def WEvade_W(original_image, Encoder, Decoder, criterion, args):
 def WEvade_W_binary_search_r(original_image, Encoder, Decoder, criterion, args):
 
     original_image = original_image.cuda()
-    groundtruth_watermark = torch.from_numpy(np.load('./watermark_coco.npy')).cuda()
+    groundtruth_watermark = torch.from_numpy(np.load('./watermark/watermark_coco.npy')).cuda()
     watermarked_image = Encoder(original_image, groundtruth_watermark)
     watermarked_image = transform_image(watermarked_image)
     watermarked_image_cloned = watermarked_image.clone()

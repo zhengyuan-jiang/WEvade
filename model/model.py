@@ -1,3 +1,4 @@
+# Modified from https://github.com/ando-khachatryan/HiDDeN
 from model.encoder import Encoder
 from model.decoder import Decoder
 

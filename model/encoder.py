@@ -23,7 +23,8 @@ class Encoder(nn.Module):
         self.final_layer = nn.Conv2d(self.conv_channels, 3, kernel_size=1)
 
     def forward(self, original_image, watermark):
-        ### First, add two dummy dimensions in the end of the watermark. This is required for the .expand to work correctly.
+        # First, add two dummy dimensions in the end of the watermark.
+        # This is required for the .expand to work correctly.
         expanded_watermark = watermark.unsqueeze(-1)
         expanded_watermark.unsqueeze_(-1)
         expanded_watermark = expanded_watermark.expand(-1, -1, self.H, self.W)

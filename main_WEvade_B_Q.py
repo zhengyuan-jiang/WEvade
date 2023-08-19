@@ -308,8 +308,8 @@ def main():
             watermarked_images[i] = im
 
     ### Load watermark
-    msg_dir = './watermark/{}'.format(exp)
-    msg_path = os.path.join(msg_dir, 'message.npy')
+    msg_dir = './watermark/'
+    msg_path = os.path.join(msg_dir, 'watermark_coco.npy')
     if not os.path.exists(msg_path):
         assert "Watermark does not exists."
     msg = np.load(msg_path)
@@ -330,8 +330,8 @@ def main():
     print("Use l_{} norm as the metric.\n".format(norm))
 
     quality_ls = [99,90,70,50,30,10,5,3,2,1]
-    # th_ls = [0.55, 0.6]
-    th_ls = [0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95]   
+    # th_ls = [0.83]
+    th_ls = [0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95]
     verbose = args.verbose
     results_dict = {}
     results_dir = "./results/{}/".format(exp)

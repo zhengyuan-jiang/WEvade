@@ -1,8 +1,7 @@
-import numpy as np
 from scipy import stats
 
 
-### HiDDeN watermarking method's (n=30) theoretical lower bound of Evasion Rate with respect to Detection Threshold \tau.
+# HiDDeN watermarking method's (n=30) theoretical lower bound of Evasion Rate with respect to Detection Threshold \tau.
 def HiDDeN_theoretical():
     tau_list = [0.95, 0.9, 0.85, 0.8, 0.75, 0.7, 0.65, 0.6, 0.55]
     theo_er = []
@@ -16,7 +15,7 @@ def HiDDeN_theoretical():
     print(theo_er)
 
 
-### UDH watermarking method's (n=256) theoretical lower bound of Evasion Rate with respect to Detection Threshold \tau.
+# UDH watermarking method's (n=256) theoretical lower bound of Evasion Rate with respect to Detection Threshold \tau.
 def UDH_theoretical():
     tau_list = [0.95, 0.9, 0.85, 0.8, 0.75, 0.7, 0.65, 0.6, 0.55]
     theo_er = []

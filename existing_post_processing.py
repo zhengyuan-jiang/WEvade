@@ -16,7 +16,7 @@ def post_process(original_image, Encoder, Decoder, method, args):
 
     # Embed the ground-truth watermark into the original image.
     original_image = original_image.cuda()
-    groundtruth_watermark = torch.from_numpy(np.load('./watermark_coco.npy')).cuda()
+    groundtruth_watermark = torch.from_numpy(np.load('./watermark/watermark_coco.npy')).cuda()
     watermarked_image = Encoder(original_image, groundtruth_watermark)
     watermarked_image = transform_image(watermarked_image)
     watermarked_image_cloned = watermarked_image.clone()
@@ -51,7 +51,7 @@ def main():
         device = torch.device('cpu')
 
     parser = argparse.ArgumentParser(description='Existing post-processing methods Arguments.')
-    parser.add_argument('--checkpoint', default='./coco.pth', type=str, help='Model checkpoint file.')
+    parser.add_argument('--checkpoint', default='./ckpt/coco.pth', type=str, help='Model checkpoint file.')
     parser.add_argument('--dataset-folder', default='./dataset/coco/val', type=str, help='Dataset folder path.')
     parser.add_argument('--image-size', default=128, type=int, help='Size of the images (height and width).')
     parser.add_argument('--watermark-length', default=30, type=int, help='Number of bits in a watermark.')
@@ -98,6 +98,7 @@ def main():
             elif args.detector_type == 'double-tailed':
                 evasion = (bit_acc <= args.tau)
 
+            bound = bound / 2  # [-1,1]->[0,1]
             Bit_acc.update(bit_acc, image.shape[0])
             Perturbation.update(bound, image.shape[0])
             Evasion_rate.update(evasion, image.shape[0])

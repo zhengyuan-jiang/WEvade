@@ -55,10 +55,8 @@ def main():
     val_data = utils.get_data_loaders(args.image_size, args.dataset_folder)
 
     ### Load watermark
-    msg_dir = './watermark/{}'.format(exp)
-    if not os.path.exists(msg_dir):
-        os.makedirs(msg_dir)
-    msg_path = os.path.join(msg_dir, 'message.npy')
+    msg_dir = './watermark/'
+    msg_path = os.path.join(msg_dir, 'watermark_coco.npy')
     if os.path.exists(msg_path):
         msg = np.load(msg_path)
     else:
