@@ -1,6 +1,6 @@
-# WEvade
+# Official Implementation of WEvade
 
-This code is the official implementation of [WEvade](https://arxiv.org/abs/2305.03807).
+This code is the official implementation of our paper: Evading Watermark based Detection of AI-Generated Content [Paper](https://arxiv.org/abs/2305.03807).
 
 ## Preparation
 
@@ -21,17 +21,20 @@ This code is the official implementation of [WEvade](https://arxiv.org/abs/2305.
 1. Encode watermark and save watermarked images (watermark is generated using the random seed):
 
 		python3 encode_watermarked_images.py --checkpoint './ckpt/coco.pth' --dataset-folder './dataset/coco/val' --exp 'COCO'
-		<!-- python3 encode_watermarked_images.py --checkpoint './ckpt/coco_adv_train.pth' --dataset-folder './dataset/coco/val' --exp 'COCO-ADV' -->
+
+		python3 encode_watermarked_images.py --checkpoint './ckpt/coco_adv_train.pth' --dataset-folder './dataset/coco/val' --exp 'COCO-ADV'
 
 2. (optional) Decode watermarked images for evaluation:
 
 		python3 decode_watermarked_images.py --checkpoint './ckpt/coco.pth' --dataset-folder './dataset/coco/val' --exp 'COCO'
-		<!-- python3 decode_watermarked_images.py --checkpoint './ckpt/coco_adv_train.pth' --dataset-folder './dataset/coco/val' --exp 'COCO-ADV' -->
+
+		python3 decode_watermarked_images.py --checkpoint './ckpt/coco_adv_train.pth' --dataset-folder './dataset/coco/val' --exp 'COCO-ADV'
 
 3. Run our black-box attack:
 
         python3 main_WEvade_B_Q.py --checkpoint './ckpt/coco.pth' --dataset-folder './dataset/coco/val' --exp 'COCO' --num-attack 10 --norm 'inf'
-        <!-- python3 main_WEvade_B_Q.py --checkpoint './ckpt/coco_adv_train.pth' --dataset-folder './dataset/coco/val' --exp 'COCO-ADV' --num-attack 10 --norm 'inf' -->
+        
+        python3 main_WEvade_B_Q.py --checkpoint './ckpt/coco_adv_train.pth' --dataset-folder './dataset/coco/val' --exp 'COCO-ADV' --num-attack 10 --norm 'inf'
 
 ## Citation
 
