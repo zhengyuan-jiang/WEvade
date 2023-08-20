@@ -84,7 +84,7 @@ If you find our work useful for your research, please consider citing the paper 
 @article{jiang2023evading,
   title={Evading Watermark based Detection of AI-Generated Content},
   author={Jiang, Zhengyuan and Zhang, Jinghuai and Gong, Neil Zhenqiang},
-  journal={arXiv preprint arXiv:2305.03807},
+  journal={Proceedings of the 2023 ACM SIGSAC Conference on Computer and Communications Security},
   year={2023}
 }
 ```
