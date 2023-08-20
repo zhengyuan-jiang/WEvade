@@ -81,10 +81,10 @@ python3 existing_post_processing.py --checkpoint './ckpt/coco_adv_train.pth' --d
 
 If you find our work useful for your research, please consider citing the paper (To appear in ACM CCS 2023)
 ```
-@article{jiang2023evading,
+@inproceedings{jiang2023evading,
   title={Evading Watermark based Detection of AI-Generated Content},
   author={Jiang, Zhengyuan and Zhang, Jinghuai and Gong, Neil Zhenqiang},
-  journal={Proceedings of the 2023 ACM SIGSAC Conference on Computer and Communications Security},
+  booktitle={ACM Conference on Computer and Communications Security (CCS)},
   year={2023}
 }
 ```
