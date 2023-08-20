@@ -79,7 +79,7 @@ python3 existing_post_processing.py --checkpoint './ckpt/coco_adv_train.pth' --d
 
 ## Citation
 
-If you find our work useful for your research, please consider citing the paper
+If you find our work useful for your research, please consider citing the paper (To appear in ACM CCS 2023)
 ```
 @article{jiang2023evading,
   title={Evading Watermark based Detection of AI-Generated Content},
